@@ -384,72 +384,148 @@ bash reproduce.sh visualize
 
 ---
 
-## 10. 预训练权重和资源
+## 10. 数据盘存储要求
 
-### 10.1 VQVAE权重文件
+> **重要**: 本项目代码在系统盘，数据集和模型权重需要存放在数据盘。以下是完整的存储清单。
 
-| 绝对路径 | 大小 | 说明 |
-|----------|:----:|------|
-| `/root/autodl-tmp/OccSoraModel/epoch_125.pth` | 1.6GB | **VQVAE完整权重 (125 epochs)** - 必需 |
-| `/root/autodl-tmp/OccSoraModel/latest.pth` | 722MB | VQVAE最新权重 |
-| `/root/autodl-tmp/OccSora_output/vqvae/latest.pth` | - | 软链接指向epoch_10.pth |
+### 10.1 存储空间总览
 
-### 10.2 DiT扩散模型权重
+| 类别 | 大小 | 必需 |
+|:----:|:----:|:----:|
+| 数据集 (nuScenes + Occ3D) | ~590GB | 是 |
+| 模型权重 | ~3GB | 是 |
+| Pickle场景文件 | ~800MB | 是 |
+| Token中间数据 | ~10GB | 可选 |
+| **总计** | **~600GB** | - |
 
-| 绝对路径 | 大小 | 说明 |
-|----------|:----:|------|
-| `/root/autodl-tmp/OccSoraModel/1190000.pt` | 563MB | **DiT原始预训练权重** - 必需 |
+---
 
-### 10.3 消融实验模型权重
+### 10.2 必需文件清单
 
-| 绝对路径 | 说明 |
-|----------|------|
-| `/root/autodl-tmp/model/checkpoints/baseline/dit_stca_epoch100.pt` | Baseline模型 (100 epochs) |
-| `/root/autodl-tmp/model/stca_only/dit_stca_epoch100.pt` | +STCA模型 (100 epochs) |
-| `/root/autodl-tmp/model/sads_only/dit_stca_epoch100.pt` | +SADS模型 (100 epochs) |
-| `/root/autodl-tmp/model/full_innovation/dit_stca_epoch100.pt` | **Full模型 (最佳)** - 推荐使用 |
-| `/root/autodl-tmp/model/baseline_real/dit_stca_epoch100.pt` | Baseline真实数据训练 |
-| `/root/autodl-tmp/model/stca_real/dit_stca_epoch100.pt` | +STCA真实数据训练 |
+#### (1) 模型权重文件 (必需, 约3GB)
 
-### 10.4 Pickle场景信息文件
+| 文件 | 大小 | 说明 | 建议存放路径 |
+|------|:----:|------|-------------|
+| `epoch_125.pth` | 1.6GB | VQVAE完整权重 | `数据盘/OccSoraModel/epoch_125.pth` |
+| `1190000.pt` | 563MB | DiT预训练权重 | `数据盘/OccSoraModel/1190000.pt` |
 
-| 绝对路径 | 大小 | 说明 |
-|----------|:----:|------|
-| `/root/autodl-tmp/OccSoraModel/nuscenes_infos_train_temporal_v3_scene.pkl` | 671MB | 训练集场景信息 |
-| `/root/autodl-tmp/OccSoraModel/nuscenes_infos_val_temporal_v3_scene.pkl` | 138MB | 验证集场景信息 |
+#### (2) 数据集 (必需, 约590GB)
 
-### 10.5 Token数据
+| 数据 | 大小 | 说明 | 建议存放路径 |
+|------|:----:|------|-------------|
+| nuScenes数据集 | 554GB | 完整自动驾驶数据集 | `数据盘/nuScenes/` |
+| Occ3D语义标注 | 34GB | 850场景的占用标注 | `数据盘/gts/` |
 
-| 绝对路径 | 说明 |
-|----------|------|
-| `/root/autodl-tmp/OccSora_output/vqvae/step32-2/token/` | VQVAE生成的token数据 |
-| `/root/autodl-tmp/model/out/gt_mode_occstats/` | GT模式统计数据 |
+#### (3) Pickle场景信息文件 (必需, 约800MB)
 
-### 10.6 生成样本
+| 文件 | 大小 | 说明 | 建议存放路径 |
+|------|:----:|------|-------------|
+| `nuscenes_infos_train_temporal_v3_scene.pkl` | 671MB | 训练集场景信息 | `数据盘/OccSoraModel/` |
+| `nuscenes_infos_val_temporal_v3_scene.pkl` | 138MB | 验证集场景信息 | `数据盘/OccSoraModel/` |
 
-| 绝对路径 | 大小 | 说明 |
-|----------|:----:|------|
-| `/root/autodl-tmp/model/out/samples_array.npy` | 1.3MB | 生成样本 |
-| `/root/autodl-tmp/model/out/samples_baseline.npy` | 1.3MB | Baseline生成样本 |
-| `/root/autodl-tmp/model/out/latent_scene_0.npy` | 1.3MB | 潜在空间数据 |
+#### (4) Token数据 (可选, 训练时自动生成)
 
-### 10.7 数据集
+| 数据 | 说明 | 建议存放路径 |
+|------|------|-------------|
+| Token数据 | VQVAE编码后的token | `数据盘/OccSora_output/vqvae/step32-2/token/` |
+| GT模式数据 | 条件引导数据 | `数据盘/OccSora_output/vqvae/step32-2/gt_mode/` |
 
-| 绝对路径 | 大小 | 说明 |
-|----------|:----:|------|
-| `/root/autodl-tmp/nuScenes/` | 554GB | nuScenes完整数据集 |
-| `/root/autodl-tmp/gts/gts/` | 34GB | Occ3D语义占用标注 (850场景) |
-| `/root/autodl-tmp/gts/annotations.json` | 144MB | Occ3D标注文件 |
-| `/root/autodl-tmp/TPVFormer/` | 290MB | TPVFormer代码和配置 |
+---
 
-### 10.8 评估结果
+### 10.3 数据盘目录结构 (建议)
 
-| 绝对路径 | 说明 |
-|----------|------|
-| `/root/autodl-tmp/evaluation_results/evaluation_results.json` | 完整评估指标 |
-| `/root/autodl-tmp/evaluation_results/fid_results.json` | FID评估结果 |
-| `/root/autodl-tmp/evaluation_results/results_table.md` | 结果表格 (Markdown) |
-| `/root/autodl-tmp/evaluation_results/results_table.tex` | 结果表格 (LaTeX) |
+```
+数据盘/
+├── OccSoraModel/                                    # 模型权重目录
+│   ├── epoch_125.pth                                # VQVAE权重 (1.6GB) [必需]
+│   ├── 1190000.pt                                   # DiT预训练权重 (563MB) [必需]
+│   ├── nuscenes_infos_train_temporal_v3_scene.pkl   # 训练集信息 (671MB) [必需]
+│   └── nuscenes_infos_val_temporal_v3_scene.pkl     # 验证集信息 (138MB) [必需]
+│
+├── nuScenes/                                        # nuScenes数据集 (554GB) [必需]
+│   ├── lidarseg/
+│   ├── maps/
+│   ├── samples/
+│   ├── sweeps/
+│   └── v1.0-trainval/
+│
+├── gts/                                             # Occ3D标注 (34GB) [必需]
+│   ├── gts/                                         # 850场景标注
+│   └── annotations.json                             # 标注索引文件
+│
+├── OccSora_output/                                  # 训练输出目录 [自动生成]
+│   └── vqvae/
+│       └── step32-2/
+│           ├── token/                               # Token数据
+│           └── gt_mode/                             # GT模式数据
+│
+└── model/                                           # 训练模型输出 [自动生成]
+    ├── baseline/
+    ├── stca_only/
+    ├── sads_only/
+    └── full_innovation/
+```
+
+---
+
+### 10.4 配置路径修改
+
+使用前需要修改 `run_all_training.sh` 中的路径配置:
+
+```bash
+# ============ 修改以下路径为你的数据盘路径 ============
+
+# 数据路径
+DATA_DIR="数据盘/OccSora_output"
+CONDITION_PATH="数据盘/OccSora_output/vqvae/step32-2/gt_mode/i_iter_0.npy"
+
+# VQVAE权重路径
+VQVAE_CKPT="数据盘/OccSoraModel/epoch_125.pth"
+
+# 输出路径
+OUTPUT_DIR="数据盘/model"
+RUN_DIR="数据盘/OccSora_runs"
+
+# GT模式和Token目录
+GT_MODE_DIR="数据盘/OccSora_output/vqvae/step32-2/gt_mode"
+TOKEN_DIR="数据盘/OccSora_output/vqvae/step32-2/token"
+```
+
+还需要创建软链接连接数据集:
+
+```bash
+# 在项目目录下执行
+ln -s 数据盘/nuScenes data/nuscenes
+ln -s 数据盘/gts/gts data/nuscenes/gts
+```
+
+---
+
+### 10.5 消融实验模型权重 (可选)
+
+如果需要复现消融实验，还需要以下模型:
+
+| 文件 | 说明 | 路径 |
+|------|------|------|
+| `dit_stca_epoch100.pt` | Baseline模型 | `数据盘/model/baseline/` |
+| `dit_stca_epoch100.pt` | +STCA模型 | `数据盘/model/stca_only/` |
+| `dit_stca_epoch100.pt` | +SADS模型 | `数据盘/model/sads_only/` |
+| `dit_stca_epoch100.pt` | Full模型 (最佳) | `数据盘/model/full_innovation/` |
+
+---
+
+### 10.6 快速检查清单
+
+运行前请确认以下文件存在:
+
+```bash
+# 检查必需文件
+ls -la 数据盘/OccSoraModel/epoch_125.pth      # VQVAE权重
+ls -la 数据盘/OccSoraModel/1190000.pt         # DiT权重
+ls -la 数据盘/nuScenes/                        # nuScenes数据集
+ls -la 数据盘/gts/gts/                         # Occ3D标注
+ls -la 数据盘/OccSoraModel/*.pkl               # Pickle文件
+```
 
 ---
 
