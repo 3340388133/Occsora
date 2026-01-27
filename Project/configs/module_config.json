@@ -1,0 +1,73 @@
+{
+    "name": "OccSora-Enhancement",
+    "version": "1.0.0",
+    "description": "Enhancement toolkit for OccSora 4D Occupancy Generation",
+    "modules": {
+        "adaptive_cfg": {
+            "description": "Adaptive Classifier-Free Guidance with Temporal-Aware Dynamic Scheduling",
+            "components": [
+                "AdaptiveCFGScheduler",
+                "TemporalAwareCFG",
+                "MultiConditionCFG"
+            ],
+            "scheduling_strategies": [
+                "linear",
+                "cosine",
+                "step",
+                "adaptive",
+                "temporal_pyramid"
+            ]
+        },
+        "samplers": {
+            "description": "Hybrid Multi-Strategy Diffusion Sampler with Quality-Speed Trade-off",
+            "components": [
+                "DDIMSampler",
+                "DPMSolverSampler",
+                "EulerSampler",
+                "EulerAncestralSampler",
+                "HybridSampler",
+                "SamplerFactory"
+            ],
+            "presets": [
+                "fast",
+                "balanced",
+                "quality",
+                "high_quality",
+                "diverse"
+            ]
+        },
+        "consistency": {
+            "description": "Spatio-Temporal Consistency Enhancement with Multi-Scale Refinement",
+            "components": [
+                "TemporalConsistencyFilter",
+                "SpatialSmoothingModule",
+                "ObjectTrajectoryRefiner",
+                "MultiScaleRefinementPipeline",
+                "SpatioTemporalEnhancer",
+                "QualityAssessment"
+            ],
+            "temporal_filters": [
+                "ema",
+                "gaussian",
+                "bilateral",
+                "kalman",
+                "motion_compensated",
+                "adaptive"
+            ],
+            "spatial_filters": [
+                "gaussian",
+                "bilateral",
+                "guided",
+                "anisotropic",
+                "morphological",
+                "median"
+            ]
+        }
+    },
+    "requirements": [
+        "torch>=1.9.0",
+        "numpy>=1.19.0",
+        "scipy>=1.7.0",
+        "matplotlib>=3.4.0"
+    ]
+}

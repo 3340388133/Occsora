@@ -1,0 +1,10 @@
+# Large files
+docx/本地生成/occupancy_full_model.npy
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Data files larger than 100MB
+*.npy

@@ -1,0 +1,127 @@
+{
+  "4d_prediction": {
+    "Method": [
+      "Copy&Paste",
+      "OccWorld",
+      "OccTENS",
+      "OccSora",
+      "Ours (Full)"
+    ],
+    "Type": [
+      "Baseline",
+      "Autoregressive",
+      "Next-Scale",
+      "Diffusion",
+      "Diffusion+STCA+SADS"
+    ],
+    "mIoU": [
+      5.2,
+      19.93,
+      22.06,
+      17.5,
+      18.2
+    ],
+    "IoU": [
+      15.3,
+      29.17,
+      31.03,
+      26.8,
+      28.5
+    ],
+    "Venue": [
+      "Baseline",
+      "ECCV 2024",
+      "2024",
+      "arXiv 2024",
+      "Ours"
+    ]
+  },
+  "generation_quality": {
+    "Method": [
+      "GenAD",
+      "DriveDreamer",
+      "OccSora",
+      "DOME",
+      "Ours (Full)"
+    ],
+    "FID": [
+      15.2,
+      16.8,
+      91.78,
+      85.5,
+      34.28
+    ],
+    "FVD": [
+      280,
+      340,
+      53.82,
+      48.5,
+      19.92
+    ],
+    "Type": [
+      "Video",
+      "Video",
+      "4D Occ",
+      "4D Occ",
+      "4D Occ"
+    ]
+  },
+  "efficiency": {
+    "Method": [
+      "OccWorld",
+      "OccSora",
+      "DOME",
+      "Ours (STCA)"
+    ],
+    "Inference_Time": [
+      6.5,
+      4.68,
+      5.2,
+      3.27
+    ],
+    "Throughput": [
+      0.154,
+      0.214,
+      0.192,
+      0.306
+    ],
+    "Params_M": [
+      125,
+      118,
+      135,
+      118
+    ],
+    "Type": [
+      "Autoregressive",
+      "Diffusion",
+      "Diffusion",
+      "Diffusion+STCA"
+    ]
+  },
+  "temporal": {
+    "Method": [
+      "OccWorld",
+      "OccSora",
+      "Ours (+SADS)",
+      "Ours (Full)"
+    ],
+    "Temporal_Consistency": [
+      2.8,
+      3.21,
+      4.8,
+      5.01
+    ],
+    "Physical_Consistency": [
+      25.5,
+      28.08,
+      30.29,
+      30.03
+    ],
+    "Long_Sequence": [
+      "16 frames",
+      "32 frames",
+      "32 frames",
+      "32 frames"
+    ]
+  }
+}
